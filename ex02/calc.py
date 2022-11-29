@@ -6,6 +6,17 @@ import tkinter.messagebox as tkm
 def button_click(event):
     btn = event.widget
     num = btn["text"]
+
+    #修正
+    num_2=len(entry.get())-1
+    num_3=entry.get()
+    if len(num_3)>=1 and num in operators2:
+        print(num_3[-1])
+        if num_3[-1] in operators2:
+            entry.delete(num_2,tk.END)
+        else:
+            pass
+
     if num == "x":
         num = "*"
     elif num == "÷":
@@ -50,15 +61,15 @@ for i in range(9, -1, -1):
         c = 0
 
 #練習5
-operators1 = ["AC", "+/-", "%", "÷"]
-operators2 = ["x", "-", "+", "="]
-r, c = 1, 0
+operators1 = ["AC", "+/-", "%", ]
+operators2 = ["/","*", "-", "+", "="]
+r, c = 0, 0
 for ope in operators1:
     button = tk.Button(root, text=f"{ope}", width=4, height=2, font=("", 30))
     button.grid(row=1, column=c)
     button.bind("<1>", button_click)
     c += 1
-    if c == 3:
+    if c == 2:
         r += 1
 
 for ope in operators2:
