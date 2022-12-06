@@ -10,7 +10,7 @@ def key_up(evnet):
     global key
     key = ""
 
-def print_clear():
+def print_clear():          #クリア画面表示
     root2 = tk.Tk()
     canvas2 = tk.Canvas(root2, width=500, height=500, bg="white")
     canvas2.pack()
