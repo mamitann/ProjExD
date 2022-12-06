@@ -1,6 +1,5 @@
 import tkinter as tk
 import maze_maker as mm
-#import random 
 
 def key_down(event):
     global key
