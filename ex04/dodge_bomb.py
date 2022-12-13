@@ -51,7 +51,7 @@ def main():
                 return
 
         #練習4
-        key_dict = pg.key.get_pressed()
+        key_dict = pg.key.get_pressed()                     #何かしらのキー入力を読み込む
         if key_dict[pg.K_UP] == True:
             tori_rct.centery -= 1
         if key_dict[pg.K_DOWN] == True:
@@ -75,7 +75,7 @@ def main():
         scrn_sfc.blit(tori_sfc, tori_rct)
 
         #練習6
-        bomb_rct.move_ip(vx, vy)
+        bomb_rct.move_ip(vx, vy)                #爆弾を動かす
         scrn_sfc.blit(bomb_sfc, bomb_rct)
         yoko, tate = check_bound(bomb_rct, scrn_rct)
         vx *= yoko
