@@ -13,8 +13,9 @@ def check_bound(obj_rct, scr_rct):
         tate = -1
     return yoko, tate
 
+
 def main():
-    clock = pg.time.Clock()
+    clock = pg.time.Clock() 
 
     pg.display.set_caption("逃げろこうかとん") 
     scrn_sfc = pg.display.set_mode((1600, 900))
@@ -30,6 +31,7 @@ def main():
     scrn_sfc.blit(tori_sfc, tori_rct)
 
     #練習5
+    r = 10
     bomb_sfc = pg.Surface((20, 20))
     bomb_sfc.set_colorkey((0, 0, 0))
     pg.draw.circle(bomb_sfc, (255, 0, 0), (10, 10), 10)
@@ -41,6 +43,7 @@ def main():
 
     #練習2
     while True:
+        
         scrn_sfc.blit(pgbg_sfc, pgbg_rct)
 
         for event in pg.event.get():
@@ -57,16 +60,18 @@ def main():
             tori_rct.centerx -= 1
         if key_dict[pg.K_RIGHT] == True:
             tori_rct.centerx += 1
+        if key_dict[pg.K_ESCAPE] == True:                   #ecsキーを押すと一定時間停止する
+            pg.time.wait(1000)
         
         if check_bound(tori_rct, scrn_rct) != (+1, +1):
             if key_dict[pg.K_UP] == True:
-                tori_rct.centery -= 1
-            if key_dict[pg.K_DOWN] == True:
                 tori_rct.centery += 1
+            if key_dict[pg.K_DOWN] == True:
+                tori_rct.centery -= 1
             if key_dict[pg.K_LEFT] == True:
-                tori_rct.centerx -= 1
-            if key_dict[pg.K_RIGHT] == True:
                 tori_rct.centerx += 1
+            if key_dict[pg.K_RIGHT] == True:
+                tori_rct.centerx -= 1
         scrn_sfc.blit(tori_sfc, tori_rct)
 
         #練習6
@@ -78,8 +83,13 @@ def main():
 
 
         #練習8
-        if tori_rct.colliderect(bomb_rct) == True:
+        if tori_rct.colliderect(bomb_rct) == True:              #こうかとんに爆弾がぶつかったとき
+            tori_sfc = pg.image.load("fig/8.png")               #画像を変更する
+            tori_sfc = pg.transform.rotozoom(tori_sfc, 0, 2.0)
+            scrn_sfc.blit(tori_sfc, tori_rct)
+            pg.time.wait(1000)
             return
+
         pg.display.update() 
         clock.tick(1000)
 
