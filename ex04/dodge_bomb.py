@@ -1,5 +1,6 @@
 import pygame as pg
 import sys
+import random
 
 
 def main():
@@ -7,6 +8,7 @@ def main():
 
     pg.display.set_caption("逃げろこうかとん") 
     scrn_sfc = pg.display.set_mode((1600, 900))
+    scrn_rct = scrn_sfc.get_rect()
     pgbg_sfc = pg.image.load("fig/pg_bg.jpg")
     pgbg_rct = pgbg_sfc.get_rect()
 
@@ -16,6 +18,15 @@ def main():
     tori_rct = tori_sfc.get_rect()
     tori_rct.center = 900, 400
     scrn_sfc.blit(tori_sfc, tori_rct)
+
+    #練習5
+    bomb_sfc = pg.Surface((20, 20))
+    bomb_sfc.set_colorkey((0, 0, 0))
+    pg.draw.circle(bomb_sfc, (255, 0, 0), (10, 10), 10)
+    bomb_rct = bomb_sfc.get_rect()
+    bomb_rct.centerx = random.randint(0, scrn_rct.width)
+    bomb_rct.centery = random.randint(0, scrn_rct.height)
+    scrn_sfc.blit(bomb_sfc, bomb_rct)
 
     #練習2
     while True:
@@ -37,6 +48,7 @@ def main():
             tori_rct.centerx += 1
         scrn_sfc.blit(tori_sfc, tori_rct)
 
+        scrn_sfc.blit(bomb_sfc, bomb_rct)
         pg.display.update() 
         clock.tick(1000)
 
