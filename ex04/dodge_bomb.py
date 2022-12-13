@@ -20,9 +20,23 @@ def main():
     #練習2
     while True:
         scrn_sfc.blit(pgbg_sfc, pgbg_rct)
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
+
+        #練習4
+        key_dict = pg.key.get_pressed()
+        if key_dict[pg.K_UP] == True:
+            tori_rct.centery -= 1
+        if key_dict[pg.K_DOWN] == True:
+            tori_rct.centery += 1
+        if key_dict[pg.K_LEFT] == True:
+            tori_rct.centerx -= 1
+        if key_dict[pg.K_RIGHT] == True:
+            tori_rct.centerx += 1
+        scrn_sfc.blit(tori_sfc, tori_rct)
+
         pg.display.update() 
         clock.tick(1000)
 
