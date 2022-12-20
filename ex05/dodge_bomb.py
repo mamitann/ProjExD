@@ -1,6 +1,7 @@
 import pygame as pg
 import random
 import sys
+import time
 
 class Screen:
     def __init__(self, title, wh, img_path):
@@ -64,6 +65,34 @@ class Bomb:
         self.vy *= tate
         self.blit(scr)
 
+class Weapon:
+    def __init__(self, color, rad):
+        self.sfc = pg.Surface((2*rad, 2*rad))
+        self.sfc.set_colorkey((0, 0, 0))
+        pg.draw.circle(self.sfc, color, (rad, rad), rad, 4)
+        self.rct = self.sfc.get_rect()
+
+    def effect(self, img_path, ratio):
+        self.sfc = pg.image.load(img_path)
+        self.sfc = pg.transform.rotozoom(self.sfc, 0, ratio)
+        self.rct = self.sfc.get_rect()
+
+    def blit(self, scr:Screen):
+        scr.sfc.blit(self.sfc, self.rct)
+        
+
+    def update(self, tori:Bird, scr:Screen):
+        key_dct = pg.key.get_pressed()
+        self.rct.centerx = tori.rct.centerx
+        self.rct.centery = tori.rct.centery
+
+        if key_dct == pg.K_1:
+            pass
+
+        self.blit(scr)
+
+   
+
 def check_bound(obj_rct, scr_rct):
     """
     第1引数：こうかとんrectまたは爆弾rect
@@ -88,8 +117,14 @@ def main():
     kkt = Bird("fig/6.png", 2.0, (900, 400))
     kkt.update(scr)
 
+    buki = Weapon((0, 0, 255), 75)
+    buki.update(kkt, scr)
+
     # 練習５
-    bkd = Bomb((255, 0, 0), 10, (+1, +1), scr)
+    bkd_lst = []
+    for i in range(5):
+        bkd = Bomb((255, 0, 0), 10, (random.choice([+1, -1]), random.choice([+1, -1])), scr)
+        bkd_lst.append(bkd)
     bkd.update(scr)
 
     # 練習２
@@ -101,11 +136,14 @@ def main():
                 return
 
         kkt.update(scr)
-        bkd.update(scr)
-
-        # 練習８
-        if kkt.rct.colliderect(bkd.rct):
-            return
+        buki.update(kkt, scr)
+        for i in range(5):
+            bkd_lst[i].update(scr)
+            if bkd.rct.colliderect(buki.rct.centerx+75, buki.rct.centery+75, buki.rct.width, buki.rct.height):
+                #buki.effect("data/explosion1.gif")
+                pass                     
+            if kkt.rct.colliderect(bkd.rct):
+                return
 
         pg.display.update()
         clock.tick(1000)
