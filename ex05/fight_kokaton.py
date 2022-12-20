@@ -1,7 +1,6 @@
 import pygame as pg
 import random
 import sys
-import time
 
 class Screen:
     def __init__(self, title, wh, img_path):
